@@ -1,0 +1,13 @@
+[Format for Tickets whos Facility is NOT under NBBNetS]
+------------------------------------------------------------------------------------
+Supply All the neccessary fields
+-Request Type (Chooser from the Select Box)
+-Facility (IMPORTANT!)
+	-MUST BE UNDER DOH (Select from the Select Box)
+-Description (IMPORTANT!)
+	-MUST SUPPLY NAME OF FACILITY (Example: At Atrium Hotel)
+	-FOLLOWED BY THE DESCRIPTION (Example: Assist participant etc.)
+-Urgency/Severity
+-Personner to deploy
+------------------------------------------------------------------------------------
+
