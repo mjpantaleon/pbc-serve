@@ -63,19 +63,17 @@ $Message = '';
                                                 <th>Ticket code</th>
                                                 <th>Subject</th>
                                                 <th>Date</th>
-                                                <th>Created By</th>
                                                 <th>Assigned To</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $query      = " SELECT t.`ticket_cd` , t.`SUBJ` , t.`date` , t.`ST`, t.`disable_flag` , f.`facility_name` , 
-                                                        st.`UN` 
+                                        $query      = " SELECT t.`ticket_cd` , t.`SUBJ` , t.`date` , t.`ST`, t.`disable_flag` , f.`name`
                                                         FROM  `ticket` t
-                                                        LEFT JOIN  `r_facility` f ON t.`facility_cd` = f.`facility_cd` 
-                                                        LEFT JOIN  `staff` st ON t.`created_by` = st.`staff_cd` 
-                                                        WHERE t.`disable_flag` = '0' AND t.`date` LIKE '%2020%'
+                                                        LEFT JOIN  `section` f ON t.`facility_cd` = f.`id` 
+                                                        LEFT JOIN  `ticket_staff` st ON t.`ticket_cd` = st.`ticket_cd` 
+                                                        WHERE t.`disable_flag` = '0' AND t.`date` LIKE '%2021%'
                                                         ORDER BY  `date` DESC ";
                                         $result     = mysql_query($query);
                                         while($row  = mysql_fetch_array($result))
@@ -84,7 +82,7 @@ $Message = '';
                                             $ticket_cd  = $row['ticket_cd'];
                                             $subject    = $row['SUBJ'];
                                             $date       = $row['date'];
-                                            $by         = $row['UN'];
+                                            // $by         = $row['UN'];
                                             // $to         = $row['staff_cd'];
                                             $ST         = $row['ST'];
 
@@ -95,7 +93,6 @@ $Message = '';
                                                 <td class='col-sm-5 col-xm-5'>".$subject."</td>
                                                 
                                                 <td class='col-sm-2 col-xm-2'>".date("F d, Y",strtotime($date))."</td>
-                                                <td class='col-sm-1 col-xm-1'>".$by."</td>
                                                 <td class='col-sm-1 col-xm-1'>";
 
                                                 $query = "SELECT * FROM ticket_staff INNER JOIN staff ON ticket_staff.staff_cd =  staff.staff_cd WHERE ticket_cd = '".$ticket_cd."'";

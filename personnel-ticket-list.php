@@ -96,7 +96,7 @@ $Message = '';
                                                     if($ST != 1){
                                                     $div .=" 
                                                     <a href ='personnel-ticket-details.php?id=".$ticket_cd."' 
-                                                    class='has-tooltip btn btn-info btn-xs' data-toggle='tooltip' 
+                                                    class='has-tooltip btn btn-success btn-xs' data-toggle='tooltip' 
                                                     data-placement='left' title='Click to view details'>
                                                     <span class='glyphicon glyphicon-search'></span></a>
                                                     ";
@@ -125,12 +125,10 @@ $Message = '';
                             <!-- /.row -->
                     </article>
 
-                    <aside class="col-md-3 col-sm-6">
+                    <!-- <aside class="col-md-3 col-sm-6">
                         <div class="panel panel-success">
                             <div class="panel-heading">
-                                <!--<span class="pull-right"><a href="">Sign Up</a></span>-->
                                 <div class="pull-right">
-                                    <!--<input type="text" class="form-control" name="txtSearch" placeholder="Search by Donation ID" autofocus />-->
                                 </div>
                                 <h4>What do you want to do?</h4>
                             </div>
@@ -149,8 +147,7 @@ $Message = '';
                                 </div>
                             </div>
                         </div>
-                        <!-- /.row -->
-                    </aside>
+                    </aside> -->
                 </div>
                 <!-- /.row -->
             </div>
