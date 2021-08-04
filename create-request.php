@@ -257,7 +257,7 @@ if(isset($_POST['cmdIssue'])){
                                             echo "
                                             <tr>
                                                 <td class='pull-right'>
-                                                    <input type='checkbox' name='staff_cd[]' value='".$row["staff_cd"]."' $is_checked />
+                                                    <input type='radio' name='staff_cd[]' value='".$row["staff_cd"]."' $is_checked />
                                                 </td>
                                                 <td>".$row["FN"]." (".$row['position'].")</td>
                                             </tr>";

@@ -167,9 +167,9 @@
                     <li>
                         <a href="admin-ticket-list.php"><i class="fa fa-fw fa-ticket"></i> Ticket</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="admin-staffs.php"><i class="fa fa-fw fa-user"></i> Staff</a>
-                    </li>
+                    </li> -->
                     <li>
                         <a href="admin-maintenance.php"><i class="fa fa-fw fa-gear"></i> Maintenance</a>
                     </li>
