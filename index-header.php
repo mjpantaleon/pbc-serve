@@ -75,12 +75,12 @@
                     <li class="active">
                         <a href="index.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="inquire.php"><i class="fa fa-fw fa-edit"></i> Inquire</a>
                     </li>
                     <li>
                         <a href="contact-us.php"><i class="fa fa-fw fa-inbox"></i> Contact Us</a>
-                    </li>
+                    </li> -->
                     
                 </ul>
             </div>

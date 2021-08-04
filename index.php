@@ -34,27 +34,29 @@ $Message = '';
 
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-info">
+                        <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <div class="row">
                                     <div class="col-xs-3">
-                                        <i class="fa fa-comments fa-5x"></i>
+                                        <i class="fa fa-list-alt fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge">0</div>
-                                        <div>New Inquiries!</div>
+                                        <div class="huge">&nbsp;</div>
+                                        <div>&nbsp;</div>
                                     </div>
                                 </div>
                             </div>
                             <a href="#">
                                 <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-left">CREATE NEW REQUEST</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                         </div>
                     </div>
+
+                    <!-- 
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-warning">
                             <div class="panel-heading">
@@ -82,7 +84,7 @@ $Message = '';
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                     
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-success">
@@ -99,17 +101,18 @@ $Message = '';
                                         $Tickets    = $row['count'];
                                         ?>
                                         <div class="huge"><?php echo $Tickets; ?></div>
-                                        <div>My Tickets!</div>
+                                        <div>Ticket Count</div>
                                     </div>
                                 </div>
                             </div>
-                            <a href="#">
+                            <!-- <a href="#"> -->
                                 <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
+                                    <!-- <span class="pull-left">View Details</span> -->
+                                    <span class="pull-left">&nbsp;</span>
                                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                     <div class="clearfix"></div>
                                 </div>
-                            </a>
+                            <!-- </a> -->
                         </div>
                     </div>
                 </div>
