@@ -50,7 +50,7 @@ $Message = '';
 
 
                 <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <div class="panel panel-info">
                             <div class="panel-heading">
                                 <div class="row">
@@ -71,8 +71,8 @@ $Message = '';
                                 </div>
                             </a>
                         </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
+                    </div> -->
+                    <!-- <div class="col-lg-3 col-md-6">
                         <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <div class="row">
@@ -99,7 +99,7 @@ $Message = '';
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                     
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-success">
@@ -116,7 +116,7 @@ $Message = '';
                                         $Tickets    = $row['count'];
                                         ?>
                                         <div class="huge"><?php echo $Tickets; ?></div>
-                                        <div>My Tickets!</div>
+                                        <div>Tickets</div>
                                     </div>
                                 </div>
                             </div>

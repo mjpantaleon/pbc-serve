@@ -81,9 +81,9 @@ $Message = '';
                             #GET TICKET DETAILS=====================================================================
                             $ticket_cd      = $_GET['id'];
 
-                            $query          = " SELECT t.*, f.`facility_name`
+                            $query          = " SELECT t.*, f.`name`
                                                 FROM `ticket` t
-                                                LEFT JOIN `r_facility` f ON t.`facility_cd` = f.`facility_cd`
+                                                LEFT JOIN `section` f ON t.`facility_cd` = f.`id`
                                                 WHERE `ticket_cd` = '".$ticket_cd."'
                             ";
                             $result         = mysql_query($query);
@@ -91,7 +91,7 @@ $Message = '';
                             #LOCAL VARIABLES
                             $ticket_cd      = $row['ticket_cd'];
                             $request_type   = $row['request_type'];
-                            $facility       = $row['facility_name'];
+                            $facility       = $row['name'];
                             $decription     = $row['problem_desc'];
                             $date           = $row['date'];
                             $st             = $row['ST'];
@@ -135,7 +135,14 @@ $Message = '';
                                             </tr>
 
                                             <tr>
-                                                <th class='col-sm-4 col-xm-4'>Facility</th>
+                                                <th class='col-sm-4 col-xm-4'>Description</th>
+                                                <td colspan='3' class='col-sm-8 col-xm-8'>
+                                                    <?php echo nl2br($decription); ?>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th class='col-sm-4 col-xm-4'>Section</th>
                                                 <td class='col-sm-8 col-xm-8'>
                                                     <?php echo $facility; ?>
                                                 </td>
@@ -145,13 +152,6 @@ $Message = '';
                                                         <span class='glyphicon glyphicon-home'></span>
                                                     </a>
                                                 </td>-->
-                                            </tr>
-
-                                            <tr>
-                                                <th class='col-sm-4 col-xm-4'>Description</th>
-                                                <td colspan='3' class='col-sm-8 col-xm-8'>
-                                                    <?php echo nl2br($decription); ?>
-                                                </td>
                                             </tr>
 
                                             <tr>

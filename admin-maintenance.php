@@ -78,6 +78,35 @@ $Message = '';
                             </a>
                         </div>
                     </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-home fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <?php
+                                        $query      = " SELECT count(`id`) as count FROM `section` WHERE `disable_flag` = '0' ";
+                                        $result     = mysql_query($query);
+                                        $row        = mysql_fetch_assoc($result);
+                                        $request_type   = $row['count'];
+                                        ?>
+                                        <div class="huge"><?php echo $request_type; ?></div>
+                                        <div>Sections</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="admin-section-list.php">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                     
                 </div>
                 <!-- /.row -->

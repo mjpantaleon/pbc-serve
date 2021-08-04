@@ -36,14 +36,14 @@ $Message = '';
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Ticket <small></small>
+                            Sections <small></small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
-                                <i class="fa fa-dashboard"></i>  <a href="admin-main.php">Dashboard</a>
+                                <i class="fa fa-gear"></i>  <a href="admin-maintenance.php">Admin Maintenance</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-ticket"></i> Ticket
+                                <i class="fa fa-ticket"></i> Section List
                             </li>
                         </ol>
                     </div>
@@ -55,53 +55,46 @@ $Message = '';
                     <article class="col-md-9 col-sm-6">
                         <div class="panel panel-success">
                             <div class="panel-heading">
-                                <h4>List of Tickets</h4>
+                                <h4>List of Sections/ Departments</h4>
                             </div>
                             
                             <div class="panel-body">
                                     <table class="table table-bordered table-striped table-hover make-dataTable">
                                         <thead>
                                             <tr>
-                                                <th>Ticket code</th>
-                                                <th>Section/ Department</th>
-                                                <th>Date</th>
+                                                <th>Section</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $query      = " SELECT t.`ticket_cd`,t.`date`,t.`ST`,f.`name` 
-                                                        FROM `ticket` t
-                                                        LEFT JOIN `section` f ON t.`facility_cd` = f.`id`
-                                                        ORDER BY `ticket_cd` ASC ";
+                                        $query      = " SELECT * FROM `section`
+                                                        WHERE `disable_flag` = '0' ";
                                         $result     = mysql_query($query);
                                         while($row  = mysql_fetch_array($result))
                                         {
                                             #POST VARIABLES
-                                            $ticket_cd  = $row['ticket_cd'];
-                                            $facility   = $row['name'];
-                                            $date       = $row['date'];
-                                            $ST         = $row['ST'];
+                                            $request_id     = $row['id'];
+                                            $request_type   = $row['name'];
+                                            $disable_flag   = $row['disable_flag'];
 
                                             #RESULT TABLE
                                             $div = "
                                             <tr>
-                                                <td class='col-sm-4 col-xm-4'>".$ticket_cd."</td>
-                                                <td class='col-sm-5 col-xm-5'>".$facility."</td>
-                                                <td class='col-sm-2 col-xm-2'>".date("F d, Y",strtotime($date))."</td>
-                                                    <td class='col-sm-1 col-xm-1'> ";
-                                                    if($ST != 1){
+                                                <td class='col-sm-11 col-xm-11'>".$request_type."</td>
+                                                <td class='col-sm-1 col-xm-1'> ";
+                                                    if($disable_flag != 1){
                                                     $div .=" 
-                                                    <a href ='admin-ticket-details.php?id=".$ticket_cd."' 
+                                                    <a href ='admin-section-edit.php?id=".$request_id."' 
                                                     class='has-tooltip btn btn-success btn-xs' data-toggle='tooltip' 
-                                                    data-placement='left' title='Click to view details'>
+                                                    data-placement='left' title='Click to Edit this item'>
                                                     <span class='glyphicon glyphicon-search'></span></a>
                                                     ";
                                                     } else {
                                                     $div .=" 
-                                                    <a href ='admin-ticket-details.php?id=".$ticket_cd."' 
+                                                    <a href ='admin-section-edit.php?id=".$request_id."' 
                                                     class='has-tooltip btn btn-warning btn-xs' data-toggle='tooltip' 
-                                                    data-placement='left' title='Click to view details'>
+                                                    data-placement='left' title='Click to Edit this item'>
                                                     <span class='glyphicon glyphicon-search'></span></a>
                                                     ";   
                                                     }
@@ -123,7 +116,31 @@ $Message = '';
                     </article>
 
                     <aside class="col-md-3 col-sm-6">
-                        <?php #include('admin-tlist-aside.php') ?>
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <!--<span class="pull-right"><a href="">Sign Up</a></span>-->
+                                <div class="pull-right">
+                                    <!--<input type="text" class="form-control" name="txtSearch" placeholder="Search by Donation ID" autofocus />-->
+                                </div>
+                                <h4>What do you want to do?</h4>
+                            </div>
+                            
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover" id="dataTables-example">
+                                        <tr>
+                                            <td class='warning'>
+                                                <a href='admin-section-add.php'>
+                                                    <i class="fa fa-edit"></i>&nbsp;&nbsp;Create New
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+
                     </aside>
                 </div>
                 <!-- /.row -->

@@ -206,7 +206,7 @@ if(isset($_POST['cmdIssue'])){
                                             </tr>
 
                                             <tr>
-                                                <th class='col-sm-4 col-xm-4'>Requesting Section</th>
+                                                <th class='col-sm-4 col-xm-4'>Requesting Section/ Department</th>
                                                 <td class='col-sm-8 col-xm-8'>
                                                     <select  class='form-control' name='cmbFacility' required>
                                                         <option value=''>--- Select here ---</option>
