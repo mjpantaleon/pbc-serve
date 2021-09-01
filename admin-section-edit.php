@@ -93,7 +93,7 @@ $request_id     = $_GET['id'];
                                 <i class="fa fa-gear"></i>  <a href="admin-maintenance.php">Admin Maintenance</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-ticket"></i> <a href="admin-section-list.php">Section List</a>
+                                <i class="fa fa-home"></i> <a href="admin-section-list.php">Section List</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-edit"></i> Edit Section Details

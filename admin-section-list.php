@@ -36,14 +36,14 @@ $Message = '';
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Sections <small></small>
+                            Sections & Accounts<small></small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
                                 <i class="fa fa-gear"></i>  <a href="admin-maintenance.php">Admin Maintenance</a>
                             </li>
                             <li class="active">
-                                <i class="fa fa-ticket"></i> Section List
+                                <i class="fa fa-home"></i> Section List
                             </li>
                         </ol>
                     </div>
@@ -89,6 +89,11 @@ $Message = '';
                                                     class='has-tooltip btn btn-success btn-xs' data-toggle='tooltip' 
                                                     data-placement='left' title='Click to Edit this item'>
                                                     <span class='glyphicon glyphicon-search'></span></a>
+
+                                                    <a href ='admin-section-add-account.php?id=".$request_id."' 
+                                                    class='has-tooltip btn btn-danger btn-xs' data-toggle='tooltip' 
+                                                    data-placement='left' title='Click to Add account under this Section'>
+                                                    <span class='glyphicon glyphicon-user'></span></a>
                                                     ";
                                                     } else {
                                                     $div .=" 
