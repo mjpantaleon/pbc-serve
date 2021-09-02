@@ -21,6 +21,12 @@ if( ($user_id == '') && ($ulevel =='') )
 }
 
 #POST VARIABLE FOR MESSAGE PROMPT
+$section    = $_REQUEST['id'];
+
+$query  = " SELECT name FROM `section` WHERE id = '$section'";
+$result = mysql_query($query);
+$row    = mysql_fetch_array($result);  
+
 $Message    = '';
 $fullname   = '';
 $username    = '';
@@ -35,9 +41,9 @@ $page = mysql_real_escape_string(basename($_SERVER['SCRIPT_NAME']));
     if(isset($_POST['cmdUpdate'])){
 
         $fullname   = mysql_real_escape_string($_POST['txtFN']);
-        $username    = mysql_real_escape_string($_POST['txtUN']);
+        $username   = mysql_real_escape_string($_POST['txtUN']);
         $password   = 'pbcuser123';
-        $position   = 1;      # IT
+        $position   = $section;      # IT
         $pw_change  = 1;
         $valid      = true;
 
@@ -65,13 +71,27 @@ $page = mysql_real_escape_string(basename($_SERVER['SCRIPT_NAME']));
 
             $Message = '
             <div class="alert alert-success">
-                <i class="fa fa-check"></i> New account has been successfully added under this section.
+                <i class="fa fa-check"></i> New account has been successfully added under '.$row['name'].' section.
             </div> ';
         }
 
 
     }
     #IF ISSUE BUTTON HAS BEEN CLICKED OR DETECTED THEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+    if(isset($_POST['cmdDisable'])){
+
+        $staff_id = $_POST['txtStaffCD'];
+
+
+
+        $Message = '
+        <div class="alert alert-success">
+            <i class="fa fa-check"></i> Account has been disabled.'.$staff_id.'
+        </div>
+        ';
+    }
 ?>
 <?php include('admin-header.php'); ?>
 
@@ -103,13 +123,10 @@ $page = mysql_real_escape_string(basename($_SERVER['SCRIPT_NAME']));
                 <p><?php echo $Message; ?></p>
 
                 <div class="row">
-                    <article class="col-md-9 col-sm-6">
-                        <div class="panel panel-success">
+                    <article class="col-md-5 col-sm-5">
+                        <div class="panel panel-default">
                             <div class="panel-heading">
-                                <!--<span class="pull-right"><a href="">Sign Up</a></span>-->
-                                <div class="pull-right">
-                                    <!--<input type="text" class="form-control" name="txtSearch" placeholder="Search by Donation ID" autofocus />-->
-                                </div>
+                                <div class="pull-right">&nbsp;</div>
                                 <h4>Account Details</h4>
                             </div>
                             
@@ -158,6 +175,68 @@ $page = mysql_real_escape_string(basename($_SERVER['SCRIPT_NAME']));
                             <!-- /.row -->
 
                     </article>
+
+                    <aside class="col-md-7 col-sm-7">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="pull-right">&nbsp;</div>
+                                <h4><?php echo $row['name'] ?> Accounts</h4>
+                            </div>
+                            
+                            <form method="post" action="">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <th>Fullname</th>
+                                        <th>Username</th>
+                                        <th>Status</th>
+                                        <!-- <th>Action</th> -->
+                                    </thead>
+                                    <tbody>
+                                    <?php
+
+                                    $query  = " SELECT staff_id,FN, UN, disable_flag FROM `staff` WHERE position = '$section' ORDER BY staff_id DESC ";
+                                    $result = mysql_query($query);
+                                    while($row = mysql_fetch_array($result)){
+
+                                        #POST VAR
+                                        $staff_id   = $row['staff_id'];
+                                        $FN         = $row['FN'];
+                                        $UN         = $row['UN'];
+                                        $disable_flag     = $row['disable_flag'];
+
+                                        if($disable_flag == 0){
+                                            $disable_flag = "Active";
+                                        } else{
+                                            $disable_flag = "In-active";
+                                        }
+
+                                        $div = "
+                                        <tr>
+                                            <td>".$FN."</td>
+                                            <td>".$UN."</td>
+                                            <td>".$disable_flag."</td>  
+                                        </tr>
+                                        ";
+
+                                        echo $div;
+                                    }
+                                    // <button class='btn btn-danger btn-sm' title='remove account'>X</button>
+                                    // <td>
+                                    //     <a href ='admin-section-remove-account.php?id=".$staff_id."' 
+                                    //     class='has-tooltip btn btn-info btn-xs' data-toggle='tooltip' 
+                                    //     data-placement='left' title='disable account'>
+                                    //     <span class='glyphicon glyphicon-lock'></span></a>
+                                    // </td>
+                                    ?>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            </form>
+                            
+                        </div>
+                    </aside>
 
                     
                 </div>

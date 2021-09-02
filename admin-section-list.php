@@ -53,7 +53,7 @@ $Message = '';
 
                 <div class="row">
                     <article class="col-md-9 col-sm-6">
-                        <div class="panel panel-success">
+                        <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4>List of Sections/ Departments</h4>
                             </div>
@@ -81,8 +81,8 @@ $Message = '';
                                             #RESULT TABLE
                                             $div = "
                                             <tr>
-                                                <td class='col-sm-11 col-xm-11'>".$request_type."</td>
-                                                <td class='col-sm-1 col-xm-1'> ";
+                                                <td class='col-sm-10 col-xm-10'>".$request_type."</td>
+                                                <td class='col-sm-2 col-xm-2'> ";
                                                     if($disable_flag != 1){
                                                     $div .=" 
                                                     <a href ='admin-section-edit.php?id=".$request_id."' 
@@ -121,7 +121,7 @@ $Message = '';
                     </article>
 
                     <aside class="col-md-3 col-sm-6">
-                        <div class="panel panel-success">
+                        <div class="panel panel-default">
                             <div class="panel-heading">
                                 <!--<span class="pull-right"><a href="">Sign Up</a></span>-->
                                 <div class="pull-right">

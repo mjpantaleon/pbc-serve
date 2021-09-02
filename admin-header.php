@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>IMU Serve - Client Support Site</title>
+    <title>PBC Serve - Client Support Site</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -49,7 +49,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <img class="pull-left" src="images/IMU_LOGO.png" width="70px" height="50px">
-                <a class="navbar-brand" href="admin-main.php">IMU Serve - Client Support Site</a>
+                <a class="navbar-brand" href="admin-main.php">PBC Serve - Client Support Site</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
