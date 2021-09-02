@@ -72,13 +72,31 @@ $Message = '';
                                         <?php
 
                                         #DISPLAY A LIST OF TICKET THAT BELONGS TO THE PERSONNEL LOGGEDIN
-                                        $query = "  SELECT * FROM `ticket` WHERE created_by = '$staff_cd' ORDER BY date DESC";
                                         // $query = "  SELECT t.`ticket_cd`, t.`SUBJ`, t.`ST`, t.`date`, f.`facility_name` 
                                         //             FROM ticket_staff tf 
                                         //             LEFT JOIN ticket t ON tf.`ticket_cd` = t.`ticket_cd` 
                                         //             LEFT JOIN r_facility f ON t.`facility_cd` = f.`facility_cd` 
                                         //             WHERE tf.`staff_cd` = '".$staff_cd."' AND `ST` = '0'
                                         //             ORDER BY t.`ticket_cd` DESC ";
+
+
+                                        # 1 = IT
+                                        if($position == 1){
+                                            $query = "  SELECT t.*, s.name FROM `ticket` t 
+                                                        LEFT JOIN `section` s ON s.id = t.request_type
+                                                        WHERE `request_type` = 1 AND t.`disable_flag` = 0 ORDER BY `date` DESC";
+                                        # 2 = SERVICES
+                                        } elseif($position == 2){
+                                            $query = "  SELECT * FROM `ticket` t
+                                                        LEFT JOIN `section` s ON s.id = t.request_type
+                                                        WHERE `request_type` = 2 AND t.`disable_flag` = 0 ORDER BY `date` DESC";;
+                                        # 3 = REQUESTOR
+                                        } else {
+                                            $query = "  SELECT * FROM `ticket` t
+                                                        LEFT JOIN `section` s ON s.id = t.request_type
+                                                        WHERE `created_by` = '$staff_cd' AND t.`disable_flag` = 0 ORDER BY `date` DESC";
+                                        }
+
                                         $result     = mysql_query($query);
                                         while($row  = mysql_fetch_array($result))
                                         {
@@ -86,14 +104,20 @@ $Message = '';
                                             $ticket_cd  = $row['ticket_cd'];
                                             $subject    = $row['SUBJ'];
                                             $request_type   = $row['request_type'];
+                                            $request_name   = $row['name'];
+                                            
                                             $date       = $row['date'];
                                             $ST         = $row['ST'];
+                                            
+                                            // $query  = " SELECT `name` FROM `section` WHERE `id` = '$request_type'";
+                                            // $result = mysql_query($query);
+                                            // $row = mysql_fetch_assoc($result);
 
                                             #RESULT TABLE
                                             $div = "
                                             <tr>
                                                 <td class='col-sm-4 col-xm-4'>".$ticket_cd."</td>
-                                                <td class='col-sm-4 col-xm-4'>".$request_type."</td>
+                                                <td class='col-sm-4 col-xm-4'>".$request_name."</td>
                                                 <td class='col-sm-5 col-xm-5'>".$subject."</td>
                                                 <td class='col-sm-2 col-xm-2'>".date("F d, Y",strtotime($date))."</td>
                                                     <td class='col-sm-1 col-xm-1'> ";

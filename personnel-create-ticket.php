@@ -193,10 +193,11 @@ if(isset($_POST['cmdIssue'])){
                                                         while($row  = mysql_fetch_array($result))
                                                         {
                                                             #POST VARIABLES
+                                                            $id = $row['id'];
                                                             $request_type = $row['name'];
 
                                                             $div = "
-                                                            <option value='".$request_type."'>".$request_type."</option>
+                                                            <option value='".$id."'>".$request_type."</option>
                                                             ";
                                                             echo $div;
                                                             

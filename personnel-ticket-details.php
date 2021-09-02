@@ -130,6 +130,10 @@ $Message = '';
                             $date           = $row['date'];
                             $st             = $row['ST'];
 
+                            $query  = " SELECT name FROM section WHERE id = '$request_type'";
+                            $result = mysql_query($query);
+                            $row = mysql_fetch_assoc($result);
+
 
                             // $query2         = " SELECT stf.`FN`, stf.`position`, ts.`ticket_cd`
                             //                     FROM `staff` stf
@@ -156,7 +160,7 @@ $Message = '';
                                             <tr>
                                                 <th class='col-sm-4 col-xm-4'>Job Request</th>
                                                 <td class='col-sm-6 col-xm-6'>
-                                                    <?php echo $request_type; ?>
+                                                    <?php echo $row['name']; ?>
                                                 </td>
                                                 <!--<td class='cols-sm-2 col-xm-2'>
                                                     <a href='' class='btn btn-sm btn-info' title='Change request type'
