@@ -14,13 +14,26 @@ $Message = '';
 
         <!-- Content wrapper -->
         <div id="page-wrapper">
+        
 
             <div class="container-fluid">
+                <div class="jumbotron">
+                    <h1 class="display-4">Terms of Service Agreement</h1>
+                    <hr class="my-4">
+                    <p class="lead">Welcome to PBC-Serve Client Support Site! IMPORTANT – PLEASE READ CAREFULLY:</p>
+                    <p>By accessing or using our sites and our services, you hereby agree to be bound by the terms and all terms incorporated herein by reference. 
+                    <br><br>It is the responsibility of you, the requestor, the user, customer or prospective customer to be accountable of what the situation may occur. 
+                    If you do not expressly agree to all of the terms and conditions, then please do no access or use our sites or our services. 
+                    <br><br>These terms of service agreement is effective as of Month/Day/Year.</p>
+
+                    <p><img src="images/pbc_logo.jpg" width="190px" height="150px"></p>
+                </div>
+
                 <!-- Page Heading -->
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Dashboard <small>Statistics Overview</small>
+                            Terms of Service Agreement
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -28,12 +41,17 @@ $Message = '';
                             </li>
                         </ol>
                     </div>
-                </div>
+                </div> -->
                 <!-- /.row -->
 
 
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                <!-- <div class="row">
+                    <div class="col-lg-12">
+                   
+                    </div>
+                </div> -->
+
+                    <!-- <div class="col-lg-3 col-md-6">
                         <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <div class="row">
@@ -54,7 +72,7 @@ $Message = '';
                                 </div>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- 
                     <div class="col-lg-3 col-md-6">
@@ -86,7 +104,7 @@ $Message = '';
                         </div>
                     </div> -->
                     
-                    <div class="col-lg-3 col-md-6">
+                    <!-- <div class="col-lg-3 col-md-6">
                         <div class="panel panel-success">
                             <div class="panel-heading">
                                 <div class="row">
@@ -105,17 +123,14 @@ $Message = '';
                                     </div>
                                 </div>
                             </div>
-                            <!-- <a href="#"> -->
-                                <div class="panel-footer">
-                                    <!-- <span class="pull-left">View Details</span> -->
-                                    <span class="pull-left">&nbsp;</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            <!-- </a> -->
+                            <div class="panel-footer">
+                                <span class="pull-left">&nbsp;</span>
+                                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div> -->
+                <!-- </div> -->
                 <!-- /.row -->
 
 
