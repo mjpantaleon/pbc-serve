@@ -11,6 +11,7 @@ session_start();
 $staff_cd = $_SESSION['staff_cd'];
 $Username = $_SESSION['UN'];
 $fullname = $_SESSION['FN'];
+$position = $_SESSION['position'];   
 
 
 //if user dont have access then redirect them to unautorized page

@@ -113,10 +113,10 @@ $Message = '';
                             #GET TICKET DETAILS=====================================================================
                             $ticket_cd      = $_GET['id'];
 
-                            $query          = " SELECT t.*, f.`name`
-                                                FROM `ticket` t
-                                                LEFT JOIN `section` f ON t.`created_by` = f.`id`
-                                                WHERE `ticket_cd` = '".$ticket_cd."'
+                            $query          = " SELECT t.*, f.`FN`
+                            FROM `ticket` t
+                            LEFT JOIN `staff` f ON t.`created_by` = f.`staff_cd`
+                            WHERE `ticket_cd` = '".$ticket_cd."'
                             ";
                             $result         = mysql_query($query);
                             $row            = mysql_fetch_array($result);
@@ -124,10 +124,11 @@ $Message = '';
                             $ticket_cd      = $row['ticket_cd'];
                             $request_type   = $row['request_type'];
                             $subject        = $row['SUBJ'];
-                            $facility       = $row['name'];
+                            $requested_by       = $row['FN'];
                             $decription     = $row['problem_desc'];
                             $date           = $row['date'];
                             $st             = $row['ST'];
+
 
 
                             $query2         = " SELECT stf.`FN`, stf.`position`, ts.`ticket_cd`
@@ -144,7 +145,7 @@ $Message = '';
                                     <table class="table table-bordered table-striped">
                                         <tbody>
 
-                                            <tr>
+                                        <tr>
                                                 <th class='col-sm-4 col-xm-4'>Ticket code</th>
                                                 <td colspan='3' class='col-sm-8 col-xm-8'>
                                                     <?php echo $ticket_cd; ?>
@@ -153,7 +154,7 @@ $Message = '';
                                             </tr>
 
                                             <tr>
-                                                <th class='col-sm-4 col-xm-4'>Request Type</th>
+                                                <th class='col-sm-4 col-xm-4'>Job Request</th>
                                                 <td class='col-sm-6 col-xm-6'>
                                                     <?php echo $request_type; ?>
                                                 </td>
@@ -188,7 +189,7 @@ $Message = '';
                                             <tr>
                                                 <th class='col-sm-4 col-xm-4'>Section</th>
                                                 <td class='col-sm-8 col-xm-8'>
-                                                    <?php echo $facility; ?>
+                                                    <?php echo $requested_by; ?>
                                                 </td>
                                                 <!--<td class='cols-sm-2 col-xm-2'>
                                                     <a href='' class='btn btn-sm btn-info' title='Change facility'
@@ -205,29 +206,29 @@ $Message = '';
                                                 </td>
                                             </tr>
 
-                                             <tr>
+                                             <!-- <tr>
                                                 <th class="col-sm-4 col-xm-4" rowspan="<?=mysql_num_rows($rs)?>">Assigned Staff</th>
                                                 <td colspan="3" class="col-sm-8 col-xs-8">
                                                     <?php
-                                                        $staff = mysql_fetch_object($rs);
-                                                        echo $staff->FN ."(".$staff->position.")";
+                                                        // $staff = mysql_fetch_object($rs);
+                                                        // echo $staff->FN ."(".$staff->position.")";
                                                     ?>
                                                 </td>
                                             </tr>
                                             <?php 
-                                            while($row2     = mysql_fetch_assoc($rs)){
-                                                $staff      = $row2['FN'];
-                                                $position   = $row2['position']; 
+                                            // while($row2     = mysql_fetch_assoc($rs)){
+                                            //     $staff      = $row2['FN'];
+                                            //     $position   = $row2['position']; 
 
-                                                echo "
-                                                <tr>
-                                                    <td colspan='3' class='col-sm-8 col-xm-8'>
-                                                        ".$staff." (".$position.") 
-                                                    </td>
-                                                </tr>
-                                                ";  
-                                            } 
-                                            ?>
+                                            //     echo "
+                                            //     <tr>
+                                            //         <td colspan='3' class='col-sm-8 col-xm-8'>
+                                            //             ".$staff." (".$position.") 
+                                            //         </td>
+                                            //     </tr>
+                                            //     ";  
+                                            // } 
+                                            ?> -->
 
                                             <tr>
                                                 <th class='col-sm-4 col-xm-4'>Status Update</th>

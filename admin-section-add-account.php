@@ -195,12 +195,12 @@ $page = mysql_real_escape_string(basename($_SERVER['SCRIPT_NAME']));
                                     <tbody>
                                     <?php
 
-                                    $query  = " SELECT staff_id,FN, UN, disable_flag FROM `staff` WHERE position = '$section' ORDER BY staff_id DESC ";
+                                    $query  = " SELECT staff_cd,FN, UN, disable_flag FROM `staff` WHERE position = '$section' ORDER BY staff_cd DESC ";
                                     $result = mysql_query($query);
                                     while($row = mysql_fetch_array($result)){
 
                                         #POST VAR
-                                        $staff_id   = $row['staff_id'];
+                                        $staff_id   = $row['staff_cd'];
                                         $FN         = $row['FN'];
                                         $UN         = $row['UN'];
                                         $disable_flag     = $row['disable_flag'];

@@ -27,6 +27,7 @@ require('db_con.php');
                 $Username       = $row['UN'];
                 $password       = $row['PW'];
                 $fullname       = $row['FN'];
+                $position       = $row['position'];
                 $pw_change      = $row['pw_change'];
                 
                 
@@ -53,6 +54,7 @@ require('db_con.php');
                         $_SESSION['staff_cd']           = $staff_cd;
                         $_SESSION['UN']                 = $Username;
                         $_SESSION['FN']                 = $fullname;
+                        $_SESSION['position']           = $position;
                         session_write_close();
                         
                         exit("<script>document.location.href='personnel-main.php';</script>\n");   

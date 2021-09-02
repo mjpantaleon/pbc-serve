@@ -11,6 +11,7 @@ session_start();
 $staff_cd = $_SESSION['staff_cd'];
 $Username = $_SESSION['UN'];
 $fullname = $_SESSION['FN'];
+$position = $_SESSION['position']; 
 
 
 //if user dont have access then redirect them to unautorized page
@@ -113,9 +114,9 @@ $Message = '';
                             #GET TICKET DETAILS=====================================================================
                             $ticket_cd      = $_GET['id'];
 
-                            $query          = " SELECT t.*, f.`name`
+                            $query          = " SELECT t.*, f.`FN`
                                                 FROM `ticket` t
-                                                LEFT JOIN `section` f ON t.`created_by` = f.`id`
+                                                LEFT JOIN `staff` f ON t.`created_by` = f.`staff_cd`
                                                 WHERE `ticket_cd` = '".$ticket_cd."'
                             ";
                             $result         = mysql_query($query);
@@ -124,18 +125,18 @@ $Message = '';
                             $ticket_cd      = $row['ticket_cd'];
                             $request_type   = $row['request_type'];
                             $subject        = $row['SUBJ'];
-                            $facility       = $row['name'];
+                            $requested_by       = $row['FN'];
                             $decription     = $row['problem_desc'];
                             $date           = $row['date'];
                             $st             = $row['ST'];
 
 
-                            $query2         = " SELECT stf.`FN`, stf.`position`, ts.`ticket_cd`
-                                                FROM `staff` stf
-                                                LEFT JOIN `ticket_staff` ts ON stf.`staff_cd` = ts.`staff_cd`
-                                                WHERE `ticket_cd` = '".$ticket_cd."'
-                            ";
-                            $rs             = mysql_query($query2);
+                            // $query2         = " SELECT stf.`FN`, stf.`position`, ts.`ticket_cd`
+                            //                     FROM `staff` stf
+                            //                     LEFT JOIN `ticket_staff` ts ON stf.`staff_cd` = ts.`staff_cd`
+                            //                     WHERE `ticket_cd` = '".$ticket_cd."'
+                            // ";
+                            // $rs             = mysql_query($query2);
             
 
                             ?>
@@ -153,7 +154,7 @@ $Message = '';
                                             </tr>
 
                                             <tr>
-                                                <th class='col-sm-4 col-xm-4'>Request Type</th>
+                                                <th class='col-sm-4 col-xm-4'>Job Request</th>
                                                 <td class='col-sm-6 col-xm-6'>
                                                     <?php echo $request_type; ?>
                                                 </td>
@@ -188,7 +189,7 @@ $Message = '';
                                             <tr>
                                                 <th class='col-sm-4 col-xm-4'>Section</th>
                                                 <td class='col-sm-8 col-xm-8'>
-                                                    <?php echo $facility; ?>
+                                                    <?php echo $requested_by; ?>
                                                 </td>
                                                 <!--<td class='cols-sm-2 col-xm-2'>
                                                     <a href='' class='btn btn-sm btn-info' title='Change facility'
@@ -205,28 +206,28 @@ $Message = '';
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <!-- <tr>
                                                 <th class="col-sm-4 col-xm-4" rowspan="<?=mysql_num_rows($rs)?>">Assigned Staff</th>
                                                 <td colspan="3" class="col-sm-8 col-xs-8">
                                                     <?php
-                                                        $staff = mysql_fetch_object($rs);
-                                                        echo $staff->FN ."(".$staff->position.")";
+                                                        // $staff = mysql_fetch_object($rs);
+                                                        // echo $staff->FN ."(".$staff->position.")";
                                                     ?>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <?php 
-                                            while($row2     = mysql_fetch_assoc($rs)){
-                                                $staff      = $row2['FN'];
-                                                $position   = $row2['position']; 
+                                            // while($row2     = mysql_fetch_assoc($rs)){
+                                            //     $staff      = $row2['FN'];
+                                            //     $position   = $row2['position']; 
 
-                                                echo "
-                                                <tr>
-                                                    <td colspan='3' class='col-sm-8 col-xm-8'>
-                                                        ".$staff." (".$position.") 
-                                                    </td>
-                                                </tr>
-                                                ";  
-                                            } 
+                                            //     echo "
+                                            //     <tr>
+                                            //         <td colspan='3' class='col-sm-8 col-xm-8'>
+                                            //             ".$staff." (".$position.") 
+                                            //         </td>
+                                            //     </tr>
+                                            //     ";  
+                                            // } 
                                             ?>
 
                                             
@@ -277,9 +278,18 @@ $Message = '';
                                                             <?php endwhile; ?>
                                                         <?php endif; ?>
                                                         <tr>
+
+                                                            <?php 
+                                                            if($position != 3){
+                                                            $div    = '
                                                             <td colspan="3">
                                                                 <a class="btn btn-xs btn-primary" href="#" data-toggle="modal" data-target="#addTicketRemarks" >Add Remarks</a>
                                                             </td>
+                                                            ';
+                                                            echo $div;
+                                                            }
+                                                            ?>
+                                                            
                                                         </tr>
                                                     </table>
 
@@ -315,16 +325,26 @@ $Message = '';
 
                     </article>
 
-                    <aside class="col-md-3 col-sm-6">
-                        <div class="panel-body">
-                            <form method='post'>
-                            
-                                <input type='submit' class='btn btn-md btn-warning' name='cmdUpdate' 
-                                value='FLAG AS ACCOMPLISHED'>
-                             
-                            </form>
-                        </div>
-                    </aside>
+                    <?php 
+                    if($position != 3){
+                        $div    = '
+                        <aside class="col-md-3 col-sm-6">
+                            <div class="panel-body">
+                                <form method="post">
+                                
+                                    <input type="submit" class="btn btn-md btn-warning" name="cmdUpdate" 
+                                    value="FLAG AS ACCOMPLISHED">
+                                
+                                </form>
+                            </div>
+                        </aside>
+                        ';
+
+                        echo $div;
+                    }
+                    
+                    ?>
+                   
 
                     <!-- MODAL POPUP DIV -->
                     <?php include('request-popup.php'); ?>

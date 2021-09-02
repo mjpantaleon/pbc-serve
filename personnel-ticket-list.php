@@ -11,6 +11,7 @@ session_start();
 $staff_cd = $_SESSION['staff_cd'];
 $Username = $_SESSION['UN'];
 $fullname = $_SESSION['FN'];
+$position = $_SESSION['position'];   
 
 
 //if user dont have access then redirect them to unautorized page
@@ -61,6 +62,7 @@ $Message = '';
                                         <thead>
                                             <tr>
                                                 <th>Ticket code</th>
+                                                <th>Job Request</th>
                                                 <th>Subject</th>
                                                 <th>Date</th>
                                                 <th></th>
@@ -70,19 +72,20 @@ $Message = '';
                                         <?php
 
                                         #DISPLAY A LIST OF TICKET THAT BELONGS TO THE PERSONNEL LOGGEDIN
-                                        $query = "  SELECT t.`ticket_cd`, t.`SUBJ`, t.`ST`, t.`date`, f.`facility_name` 
-                                                    FROM ticket_staff tf 
-                                                    LEFT JOIN ticket t ON tf.`ticket_cd` = t.`ticket_cd` 
-                                                    LEFT JOIN r_facility f ON t.`facility_cd` = f.`facility_cd` 
-                                                    WHERE tf.`staff_cd` = '".$staff_cd."' AND `ST` = '0'
-                                                    ORDER BY t.`ticket_cd` DESC ";
+                                        $query = "  SELECT * FROM `ticket` WHERE created_by = '$staff_cd' ORDER BY date DESC";
+                                        // $query = "  SELECT t.`ticket_cd`, t.`SUBJ`, t.`ST`, t.`date`, f.`facility_name` 
+                                        //             FROM ticket_staff tf 
+                                        //             LEFT JOIN ticket t ON tf.`ticket_cd` = t.`ticket_cd` 
+                                        //             LEFT JOIN r_facility f ON t.`facility_cd` = f.`facility_cd` 
+                                        //             WHERE tf.`staff_cd` = '".$staff_cd."' AND `ST` = '0'
+                                        //             ORDER BY t.`ticket_cd` DESC ";
                                         $result     = mysql_query($query);
                                         while($row  = mysql_fetch_array($result))
                                         {
                                             #POST VARIABLES
                                             $ticket_cd  = $row['ticket_cd'];
                                             $subject    = $row['SUBJ'];
-                                            #$facility   = $row['facility_name'];
+                                            $request_type   = $row['request_type'];
                                             $date       = $row['date'];
                                             $ST         = $row['ST'];
 
@@ -90,6 +93,7 @@ $Message = '';
                                             $div = "
                                             <tr>
                                                 <td class='col-sm-4 col-xm-4'>".$ticket_cd."</td>
+                                                <td class='col-sm-4 col-xm-4'>".$request_type."</td>
                                                 <td class='col-sm-5 col-xm-5'>".$subject."</td>
                                                 <td class='col-sm-2 col-xm-2'>".date("F d, Y",strtotime($date))."</td>
                                                     <td class='col-sm-1 col-xm-1'> ";
@@ -125,29 +129,41 @@ $Message = '';
                             <!-- /.row -->
                     </article>
 
-                    <!-- <aside class="col-md-3 col-sm-6">
-                        <div class="panel panel-success">
-                            <div class="panel-heading">
-                                <div class="pull-right">
+                    <?php
+                     if($position == 3){
+
+                        $div    = '
+                        <aside class="col-md-3 col-sm-6">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <div class="pull-right">
+                                    </div>
+                                    <h4>What do you want to do?</h4>
                                 </div>
-                                <h4>What do you want to do?</h4>
-                            </div>
-                            
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped table-hover" id="dataTables-example">
-                                        <tr>
-                                            <td class='warning'>
-                                                <a href='personnel-create-ticket.php'>
-                                                    <i class="fa fa-edit"></i>&nbsp;&nbsp;Create New
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover" id="dataTables-example">
+                                            <tr>
+                                                <td class="warning">
+                                                    <a href="personnel-create-ticket.php">
+                                                        <i class="fa fa-edit"></i>&nbsp;&nbsp;Create New Job request
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </aside> -->
+                        </aside>
+                        
+                        ';
+
+                        echo $div;
+                     }
+                    
+                    ?>
+                   
                 </div>
                 <!-- /.row -->
             </div>

@@ -11,6 +11,7 @@ session_start();
 $staff_cd = $_SESSION['staff_cd'];
 $Username = $_SESSION['UN'];
 $fullname = $_SESSION['FN'];
+$position = $_SESSION['position'];  
 
 
 //if user dont have access then redirect them to unautorized page
@@ -33,7 +34,7 @@ if(isset($_POST['cmdIssue'])){
     #POST VARIABLES
     $request_type   = $_POST['cmbRequestType'];
     $subject        = mysql_real_escape_string(trim($_POST['txtSubj']));
-    $facility       = $_POST['cmbFacility'];
+    // $facility       = $_POST['cmbFacility'];
     $description    = mysql_real_escape_string(trim($_POST['txtDesc']));
     $severity       = $_POST['cmbSeverity'];
     $date           = date("Y-m-d");
@@ -46,8 +47,6 @@ if(isset($_POST['cmdIssue'])){
     if ($request_type == '')
         $valid = false;
     elseif($subject == '')
-        $valid = false;
-    elseif($facility == '')
         $valid = false;
     elseif($description == '')
         $valid = false;
@@ -74,22 +73,22 @@ if(isset($_POST['cmdIssue'])){
         #id format
 
         #CHECK IF THERE ARE PERSONNEL SELECTED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        if (!isset($_POST['staff_cd'])) {
-            #PROMT ERROR MESSAGE
-            $Message = '
-            <div class="alert alert-danger">
-                <i class="fa fa-ticket"></i> <strong> ERRRR!!! NO Personnel selected! </strong> 
-                Please select personnel before you proceed.
-            </div>
-            ';
-        }
-        else{
+        // if (!isset($_POST['staff_cd'])) {
+        //     #PROMT ERROR MESSAGE
+        //     $Message = '
+        //     <div class="alert alert-danger">
+        //         <i class="fa fa-ticket"></i> <strong> ERRRR!!! NO Personnel selected! </strong> 
+        //         Please select personnel before you proceed.
+        //     </div>
+        //     ';
+        // }
+        // else{
+        if($valid == true){
             #INSERT THIS IN THE DATABASE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             $query      = " INSERT INTO `ticket` SET
                             `ticket_cd`     = '".$item_id."',
                             `request_type`  = '".$request_type."',
                             `SUBJ`          = '".$subject."',
-                            `facility_cd`   = '".$facility."',
                             `problem_desc`  = '".$description."',
                             `severity`      = '".$severity."',
                             `date`          = '".$date."',
@@ -112,15 +111,15 @@ if(isset($_POST['cmdIssue'])){
             mysql_query($query) or die(mysql_error());
 
 
-            $query = " DELETE FROM ticket_staff WHERE ticket_cd = '".$item_id."' ";
-            mysql_query($query);
+            // $query = " DELETE FROM ticket_staff WHERE ticket_cd = '".$item_id."' ";
+            // mysql_query($query);
 
-             foreach($_POST['staff_cd'] as $staff_cd){
-                $staff_cd = mysql_real_escape_string($staff_cd);
+            //  foreach($_POST['staff_cd'] as $staff_cd){
+            //     $staff_cd = mysql_real_escape_string($staff_cd);
 
-                $query = " INSERT INTO `ticket_staff` VALUES(null,'".$item_id."','".$staff_cd."')";
-                mysql_query($query) or die(mysql_error());
-            }
+            //     $query = " INSERT INTO `ticket_staff` VALUES(null,'".$item_id."','".$staff_cd."')";
+            //     mysql_query($query) or die(mysql_error());
+            // }
 
 
             #PROMT MESSAGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -184,17 +183,17 @@ if(isset($_POST['cmdIssue'])){
                                     <table class="table table-bordered table-striped">
                                         <tbody>
                                             <tr>
-                                                <th class='col-sm-4 col-xm-4'>Request Type</th>
+                                                <th class='col-sm-4 col-xm-4'>Job Request Type</th>
                                                 <td class='col-sm-8 col-xm-8'>
                                                     <select  class='form-control' name='cmbRequestType' required>
                                                         <option value=''>--- Select here ---</option>
                                                         <?php
-                                                        $query      = "SELECT * FROM `request_type` WHERE `disable_flag` = 0 ";
+                                                        $query      = "SELECT * FROM `section` WHERE `disable_flag` = 0 AND id != '$position' ";
                                                         $result     = mysql_query($query);
                                                         while($row  = mysql_fetch_array($result))
                                                         {
                                                             #POST VARIABLES
-                                                            $request_type = $row['request'];
+                                                            $request_type = $row['name'];
 
                                                             $div = "
                                                             <option value='".$request_type."'>".$request_type."</option>
@@ -216,37 +215,13 @@ if(isset($_POST['cmdIssue'])){
                                                 </td>
                                             </tr>
 
-                                            <tr>
-                                                <th class='col-sm-4 col-xm-4'>Facility</th>
-                                                <td class='col-sm-8 col-xm-8'>
-                                                    <select  class='form-control' name='cmbFacility' required>
-                                                        <option value=''>--- Select here ---</option>
-                                                        <?php
-                                                        $query      = "SELECT * FROM `r_facility` ORDER BY `facility_cd` ASC";
-                                                        $result     = mysql_query($query);
-                                                        while($row  = mysql_fetch_array($result))
-                                                        {
-                                                            #POST VARIABLES
-                                                            $facility_cd = $row['facility_cd'];
-                                                            $facility    = $row['facility_name'];
-
-                                                            $div = "
-                                                            <option value='".$facility_cd."'>".$facility."</option>
-                                                            ";
-                                                            echo $div;
-                                                            
-                                                        }
-                                                        #END WHILE
-                                                        ?>
-                                                    </select>
-                                                </td>
-                                            </tr>
+                                            
 
                                             <tr>
                                                 <th class='col-sm-4 col-xm-4'>Description</th>
                                                 <td class='col-sm-8 col-xm-8'>
                                                     <textarea class="form-control" required name="txtDesc"
-                                                    placeholder="Example: Assists regarding NBBNets Module" rows="3"></textarea>
+                                                    placeholder="Example: Assists regarding Monitor without display" rows="3"></textarea>
                                                 </td>
                                             </tr>
 
@@ -262,25 +237,25 @@ if(isset($_POST['cmdIssue'])){
                                                 </td>
                                             </tr>
 
-                                            <tr>
+                                            <!-- <tr>
                                                 <th colspan='2' class='col-sm-12 col-xm-12'>Select Personnel to deploy</th>
-                                            </tr>
+                                            </tr> -->
 
                                             <?php
-                                            $query = "SELECT * FROM  staff WHERE `disable_flag` = 0 ";
-                                            $rs = mysql_query($query);
-                                            $assigned_staff = [];
+                                            // $query = "SELECT * FROM  staff WHERE `disable_flag` = 0 ";
+                                            // $rs = mysql_query($query);
+                                            // $assigned_staff = [];
 
-                                            while($row = mysql_fetch_assoc($rs)){
-                                            $is_checked = array_search($row["staff_cd"], $assigned_staff) !== false ? "CHECKED" : "";
-                                            echo "
-                                            <tr>
-                                                <td class='pull-right'>
-                                                    <input type='checkbox' name='staff_cd[]' value='".$row["staff_cd"]."' $is_checked />
-                                                </td>
-                                                <td>".$row["FN"]." (".$row['position'].")</td>
-                                            </tr>";
-                                            }
+                                            // while($row = mysql_fetch_assoc($rs)){
+                                            // $is_checked = array_search($row["staff_cd"], $assigned_staff) !== false ? "CHECKED" : "";
+                                            // echo "
+                                            // <tr>
+                                            //     <td class='pull-right'>
+                                            //         <input type='checkbox' name='staff_cd[]' value='".$row["staff_cd"]."' $is_checked />
+                                            //     </td>
+                                            //     <td>".$row["FN"]." (".$row['position'].")</td>
+                                            // </tr>";
+                                            // }
                                             ?>
 
                                            
