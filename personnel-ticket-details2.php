@@ -126,6 +126,7 @@ $Message = '';
                             $subject        = $row['SUBJ'];
                             $requested_by       = $row['FN'];
                             $decription     = $row['problem_desc'];
+                            $urgency        = $row['severity'];
                             $date           = $row['date'];
                             $st             = $row['ST'];
 
@@ -197,6 +198,13 @@ $Message = '';
                                                         <span class='glyphicon glyphicon-home'></span>
                                                     </a>
                                                 </td>-->
+                                            </tr>
+
+                                            <tr>
+                                                <th class='col-sm-4 col-xm-4'>Urgency</th>
+                                                <td colspan='3' class='col-sm-8 col-xm-8'>
+                                                    <?php echo $urgency ; ?>
+                                                </td>
                                             </tr>
 
                                             <tr>

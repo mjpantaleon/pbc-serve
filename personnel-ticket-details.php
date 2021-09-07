@@ -65,6 +65,32 @@ $Message = '';
         ';
     }
     #IF ACCOMPLISHED BUTTON HAS BEEN CLICKED OR DETECTED|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+    #GET TICKET DETAILS=====================================================================
+    $ticket_cd      = $_GET['id'];
+    
+    $query          = " SELECT t.*, f.`FN`
+                        FROM `ticket` t
+                        LEFT JOIN `staff` f ON t.`created_by` = f.`staff_cd`
+                        WHERE `ticket_cd` = '".$ticket_cd."'
+    ";
+    $result         = mysql_query($query);
+    $row            = mysql_fetch_array($result);
+    #LOCAL VARIABLES
+    $ticket_cd      = $row['ticket_cd'];
+    $request_type   = $row['request_type'];
+    $subject        = $row['SUBJ'];
+    $requested_by   = $row['FN'];
+    $decription     = $row['problem_desc'];
+    $urgency        = $row['severity'];
+    $date           = $row['date'];
+    $st             = $row['ST'];
+
+    $query  = " SELECT name FROM section WHERE id = '$request_type'";
+    $result = mysql_query($query);
+    $row = mysql_fetch_assoc($result);
+    #GET TICKET DETAILS=====================================================================
 ?>
 
 <?php include('personnel-header.php'); ?>
@@ -111,28 +137,7 @@ $Message = '';
                             
                             <div class="panel-body">
                             <?php
-                            #GET TICKET DETAILS=====================================================================
-                            $ticket_cd      = $_GET['id'];
-
-                            $query          = " SELECT t.*, f.`FN`
-                                                FROM `ticket` t
-                                                LEFT JOIN `staff` f ON t.`created_by` = f.`staff_cd`
-                                                WHERE `ticket_cd` = '".$ticket_cd."'
-                            ";
-                            $result         = mysql_query($query);
-                            $row            = mysql_fetch_array($result);
-                            #LOCAL VARIABLES
-                            $ticket_cd      = $row['ticket_cd'];
-                            $request_type   = $row['request_type'];
-                            $subject        = $row['SUBJ'];
-                            $requested_by       = $row['FN'];
-                            $decription     = $row['problem_desc'];
-                            $date           = $row['date'];
-                            $st             = $row['ST'];
-
-                            $query  = " SELECT name FROM section WHERE id = '$request_type'";
-                            $result = mysql_query($query);
-                            $row = mysql_fetch_assoc($result);
+                           
 
 
                             // $query2         = " SELECT stf.`FN`, stf.`position`, ts.`ticket_cd`
@@ -204,37 +209,18 @@ $Message = '';
                                             </tr>
 
                                             <tr>
+                                                <th class='col-sm-4 col-xm-4'>Urgency</th>
+                                                <td colspan='3' class='col-sm-8 col-xm-8'>
+                                                    <?php echo $urgency ; ?>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
                                                 <th class='col-sm-4 col-xm-4'>Date</th>
                                                 <td colspan='3' class='col-sm-8 col-xm-8'>
                                                     <?php echo date("F d, Y",strtotime($date)); ?>
                                                 </td>
                                             </tr>
-
-                                            <!-- <tr>
-                                                <th class="col-sm-4 col-xm-4" rowspan="<?=mysql_num_rows($rs)?>">Assigned Staff</th>
-                                                <td colspan="3" class="col-sm-8 col-xs-8">
-                                                    <?php
-                                                        // $staff = mysql_fetch_object($rs);
-                                                        // echo $staff->FN ."(".$staff->position.")";
-                                                    ?>
-                                                </td>
-                                            </tr> -->
-                                            <?php 
-                                            // while($row2     = mysql_fetch_assoc($rs)){
-                                            //     $staff      = $row2['FN'];
-                                            //     $position   = $row2['position']; 
-
-                                            //     echo "
-                                            //     <tr>
-                                            //         <td colspan='3' class='col-sm-8 col-xm-8'>
-                                            //             ".$staff." (".$position.") 
-                                            //         </td>
-                                            //     </tr>
-                                            //     ";  
-                                            // } 
-                                            ?>
-
-                                            
 
                                             <tr>
                                                 <th class='col-sm-4 col-xm-4'>Status Update</th>
@@ -331,20 +317,22 @@ $Message = '';
 
                     <?php 
                     if($position != 3){
-                        $div    = '
-                        <aside class="col-md-3 col-sm-6">
-                            <div class="panel-body">
-                                <form method="post">
+                            
+                        $div    = "
+                        <aside class='col-md-3 col-sm-6'>
+                            <div class='panel-body'>
+                                <form method='post'>
                                 
-                                    <input type="submit" class="btn btn-md btn-warning" name="cmdUpdate" 
-                                    value="FLAG AS ACCOMPLISHED">
+                                    <input type='submit' class='btn btn-md btn-warning' name='cmdUpdate' 
+                                    value='FLAG AS ACCOMPLISHED'>
                                 
                                 </form>
                             </div>
                         </aside>
-                        ';
-
+                        ";
                         echo $div;
+                        
+                        
                     }
                     
                     ?>

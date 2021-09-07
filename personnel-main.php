@@ -61,11 +61,27 @@ $Message = '';
                                                         FROM `ticket` 
                                                         WHERE `created_by` = '".$staff_cd."'
                                                         AND `ST` = '0' ";*/
-                                        $query      = " SELECT count('t.ticket_cd') AS count, ts.staff_cd 
-                                                        FROM `ticket` t
-                                                        LEFT JOIN `ticket_staff` ts ON (t.ticket_cd = ts.ticket_cd) 
-                                                        WHERE `staff_cd` = '".$staff_cd."'
-                                                        AND `ST` = '0' ";
+
+
+                                        // $query      = " SELECT count('t.ticket_cd') AS count, ts.staff_cd 
+                                        //                 FROM `ticket` t
+                                        //                 LEFT JOIN `ticket_staff` ts ON (t.ticket_cd = ts.ticket_cd) 
+                                        //                 WHERE `staff_cd` = '".$staff_cd."'
+                                        //                 AND `ST` = '0' ";
+
+                                        if($position != 3){
+                                            $query      = " SELECT count(t.ticket_cd) AS count
+                                                            FROM `ticket` t
+                                                            WHERE `request_type` = '$position'
+                                                            AND `ST` = 0  ";
+                                        } else {
+                                            $query      = " SELECT count(t.ticket_cd) AS count
+                                                            FROM `ticket` t
+                                                            WHERE `created_by` = '$staff_cd'
+                                                            AND `ST` = 0  ";
+                                        }
+
+
                                         $result     = mysql_query($query);
                                         $row        = mysql_fetch_assoc($result);
                                         $Tickets    = $row['count'];
@@ -97,10 +113,17 @@ $Message = '';
                                     <div class="col-xs-9 text-right">
                                         <?php
                                         #FIND HOW MANY TICKET DOES THIS USER HAVE
-                                        $query      = " SELECT count(`ticket_cd`) as count 
-                                                        FROM `ticket` 
-                                                        WHERE `created_by` = '".$staff_cd."'
-                                                        AND `ST` = '1' ";
+                                        if($position != 3){
+                                            $query      = " SELECT count(t.ticket_cd) AS count
+                                                            FROM `ticket` t
+                                                            WHERE `request_type` = '$position'
+                                                            AND `ST` = 1  ";
+                                        } else {
+                                            $query      = " SELECT count(t.ticket_cd) AS count
+                                                            FROM `ticket` t
+                                                            WHERE `created_by` = '$staff_cd'
+                                                            AND `ST` = 1  ";
+                                        }
                                         $result     = mysql_query($query);
                                         $row        = mysql_fetch_assoc($result);
                                         $Tickets    = $row['count'];
