@@ -81,9 +81,10 @@ $Message = '';
                             #GET TICKET DETAILS=====================================================================
                             $ticket_cd      = $_GET['id'];
 
-                            $query          = " SELECT t.*, f.`name`
+                            $query          = " SELECT t.*, f.`name`, s.`FN`
                                                 FROM `ticket` t
-                                                LEFT JOIN `section` f ON t.`facility_cd` = f.`id`
+                                                LEFT JOIN `section` f ON t.`request_type` = f.`id`
+                                                LEFT JOIN `staff` s ON s.`staff_cd` = t.`created_by`
                                                 WHERE `ticket_cd` = '".$ticket_cd."'
                             ";
                             $result         = mysql_query($query);
@@ -91,8 +92,10 @@ $Message = '';
                             #LOCAL VARIABLES
                             $ticket_cd      = $row['ticket_cd'];
                             $request_type   = $row['request_type'];
-                            $facility       = $row['name'];
+                            $subject        = $row['SUBJ'];
+                            $requested_by   = $row['FN'];
                             $decription     = $row['problem_desc'];
+                            $urgency        = $row['severity'];
                             $date           = $row['date'];
                             $st             = $row['ST'];
 
@@ -113,7 +116,7 @@ $Message = '';
                                     <table class="table table-bordered table-striped">
                                         <tbody>
 
-                                            <tr>
+                                        <tr>
                                                 <th class='col-sm-4 col-xm-4'>Ticket code</th>
                                                 <td colspan='3' class='col-sm-8 col-xm-8'>
                                                     <?php echo $ticket_cd; ?>
@@ -122,9 +125,22 @@ $Message = '';
                                             </tr>
 
                                             <tr>
-                                                <th class='col-sm-4 col-xm-4'>Request Type</th>
+                                                <th class='col-sm-4 col-xm-4'>Job Request</th>
                                                 <td class='col-sm-6 col-xm-6'>
-                                                    <?php echo $request_type; ?>
+                                                    <?php echo $row['name']; ?>
+                                                </td>
+                                                <!--<td class='cols-sm-2 col-xm-2'>
+                                                    <a href='' class='btn btn-sm btn-info' title='Change request type'
+                                                    data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                                                        <span class='glyphicon glyphicon-list-alt'></span>
+                                                    </a>
+                                                </td>-->
+                                            </tr>
+
+                                            <tr>
+                                                <th class='col-sm-4 col-xm-4'>Subject</th>
+                                                <td class='col-sm-6 col-xm-6'>
+                                                    <?php echo $subject; ?>
                                                 </td>
                                                 <!--<td class='cols-sm-2 col-xm-2'>
                                                     <a href='' class='btn btn-sm btn-info' title='Change request type'
@@ -137,14 +153,14 @@ $Message = '';
                                             <tr>
                                                 <th class='col-sm-4 col-xm-4'>Description</th>
                                                 <td colspan='3' class='col-sm-8 col-xm-8'>
-                                                    <?php echo nl2br($decription); ?>
+                                                    <?php echo $decription; ?>
                                                 </td>
                                             </tr>
 
                                             <tr>
-                                                <th class='col-sm-4 col-xm-4'>Section</th>
+                                                <th class='col-sm-4 col-xm-4'>Requested By</th>
                                                 <td class='col-sm-8 col-xm-8'>
-                                                    <?php echo $facility; ?>
+                                                    <?php echo $requested_by; ?>
                                                 </td>
                                                 <!--<td class='cols-sm-2 col-xm-2'>
                                                     <a href='' class='btn btn-sm btn-info' title='Change facility'
@@ -155,32 +171,18 @@ $Message = '';
                                             </tr>
 
                                             <tr>
+                                                <th class='col-sm-4 col-xm-4'>Urgency</th>
+                                                <td colspan='3' class='col-sm-8 col-xm-8'>
+                                                    <?php echo $urgency ; ?>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
                                                 <th class='col-sm-4 col-xm-4'>Date</th>
                                                 <td colspan='3' class='col-sm-8 col-xm-8'>
                                                     <?php echo date("F d, Y",strtotime($date)); ?>
                                                 </td>
                                             </tr>
-
-                                            <tr>
-                                                <td colspan='3' colspan='2' class='col-sm-12 col-xm-12'>&nbsp;</td>
-                                            </tr>
-
-                                              
-                                            <?php 
-                                            while($row2     = mysql_fetch_assoc($rs)){
-                                            $staff      = $row2['FN'];
-                                            $position   = $row2['position']; 
-
-                                            echo "
-                                            <tr> 
-                                                <th class='col-sm-4 col-xm-4'>Assigned Staff</th>
-                                                <td colspan='3' class='col-sm-8 col-xm-8'>
-                                                    ".$staff." (".$position.")
-                                                </td>
-                                            </tr>
-                                            ";  
-                                            } 
-                                            ?>
 
 
                                             <tr>
@@ -195,6 +197,56 @@ $Message = '';
                                                     }
 
                                                     echo $st; ?>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td colspan='3' colspan='2' class='col-sm-12 col-xm-12'>
+                                                    <!-- 
+                                                    Author : Kevin 
+                                                    Date   : 2015-05-08
+                                                    -->
+                                                    <?php include "ticket-popup.php"; ?>
+                                                    <?php
+                                                    $query = "SELECT r.staff_cd,r.remarks,st.FN,r.created_dt 
+                                                    FROM ticket_remarks r 
+                                                    LEFT JOIN staff st ON (r.staff_cd = st.staff_cd) 
+                                                    WHERE r.ticket_cd = '$ticket_cd'
+                                                    ORDER BY `created_dt` DESC ";
+                                                    $rs = mysql_query($query);
+                                                    ?>
+                                                    <table class="table table-bordered table-striped">
+                                                        <tr>
+                                                            <th width="150">Staff</th><th>Remarks</th><th width="200">Date</th>
+                                                        </tr>
+                                                        <?php if(mysql_num_rows($rs) == 0): ?>
+                                                        <tr>
+                                                            <td colspan="3" align="center">No Remarks Yet</td>
+                                                        </tr>
+                                                        <?php else: ?>
+                                                            <?php while($r = mysql_fetch_object($rs)): ?>
+                                                            <tr>
+                                                                <td><?=$r->FN?></td><td><?=nl2br($r->remarks)?></td><td><?=date("F d, Y h:i:s A",strtotime($r->created_dt))?></td>
+                                                            </tr>    
+                                                            <?php endwhile; ?>
+                                                        <?php endif; ?>
+                                                        <tr>
+
+                                                       
+                                                        
+                                                        <?php 
+                                                        // if($position != 3){
+                                                        // $div    = '
+                                                        
+                                                        // ';
+                                                        // echo $div;
+                                                        // }
+                                                        ?>
+                                                            
+                                                        </tr>
+                                                    </table>
+
+                                                    <!-- End -->
                                                 </td>
                                             </tr>
                                                 

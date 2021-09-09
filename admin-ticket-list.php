@@ -63,16 +63,17 @@ $Message = '';
                                         <thead>
                                             <tr>
                                                 <th>Ticket code</th>
-                                                <th>Section/ Department</th>
+                                                <th>Job Request</th>
+                                                <th>Subject</th>
                                                 <th>Date</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                        $query      = " SELECT t.`ticket_cd`,t.`date`,t.`ST`,f.`name` 
+                                        $query      = " SELECT t.`ticket_cd`,t.`SUBJ`,t.`date`,t.`ST`,f.`name` 
                                                         FROM `ticket` t
-                                                        LEFT JOIN `section` f ON t.`facility_cd` = f.`id`
+                                                        LEFT JOIN `section` f ON t.`request_type` = f.`id`
                                                         ORDER BY `ticket_cd` ASC ";
                                         $result     = mysql_query($query);
                                         while($row  = mysql_fetch_array($result))
@@ -80,6 +81,7 @@ $Message = '';
                                             #POST VARIABLES
                                             $ticket_cd  = $row['ticket_cd'];
                                             $facility   = $row['name'];
+                                            $subject    = $row['SUBJ'];
                                             $date       = $row['date'];
                                             $ST         = $row['ST'];
 
@@ -88,6 +90,7 @@ $Message = '';
                                             <tr>
                                                 <td class='col-sm-4 col-xm-4'>".$ticket_cd."</td>
                                                 <td class='col-sm-5 col-xm-5'>".$facility."</td>
+                                                <td class='col-sm-5 col-xm-5'>".$subject."</td>
                                                 <td class='col-sm-2 col-xm-2'>".date("F d, Y",strtotime($date))."</td>
                                                     <td class='col-sm-1 col-xm-1'> ";
                                                     if($ST != 1){
